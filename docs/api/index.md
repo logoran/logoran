@@ -1,18 +1,18 @@
 # Installation
 
-  Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
+  Logoran requires __node v7.6.0__ or higher for ES2015 and async function support.
 
   You can quickly install a supported version of node with your favorite version manager:
 
 ```bash
 $ nvm install 7
-$ npm i koa
-$ node my-koa-app.js
+$ npm i logoran
+$ node my-logoran-app.js
 ```
 
 ## Async Functions with Babel
 
-To use `async` functions in Koa in versions of node < 7.6, we recommend using [babel's require hook](http://babeljs.io/docs/usage/babel-register/).
+To use `async` functions in Logoran in versions of node < 7.6, we recommend using [babel's require hook](http://babeljs.io/docs/usage/babel-register/).
 
 ```js
 require('babel-register');
@@ -35,22 +35,22 @@ You can also use the [env preset](http://babeljs.io/docs/plugins/preset-env/) wi
 
 # Application
 
-  A Koa application is an object containing an array of middleware functions
-  which are composed and executed in a stack-like manner upon request. Koa is similar to many
+  A Logoran application is an object containing an array of middleware functions
+  which are composed and executed in a stack-like manner upon request. Logoran is similar to many
   other middleware systems that you may have encountered such as Ruby's Rack, Connect, and so on -
   however a key design decision was made to provide high level "sugar" at the otherwise low-level
   middleware layer. This improves interoperability, robustness, and makes writing middleware much
   more enjoyable.
 
   This includes methods for common tasks like content-negotiation, cache freshness, proxy support, and redirection
-  among others. Despite supplying a reasonably large number of helpful methods Koa maintains a small footprint, as
+  among others. Despite supplying a reasonably large number of helpful methods Logoran maintains a small footprint, as
   no middleware are bundled.
 
   The obligatory hello world application:
 
 ```js
-const Koa = require('koa');
-const app = new Koa();
+const Logoran = require('logoran');
+const app = new Logoran();
 
 app.use(async ctx => {
   ctx.body = 'Hello World';
@@ -61,10 +61,10 @@ app.listen(3000);
 
 ## Cascading
 
-  Koa middleware cascade in a more traditional way as you may be used to with similar tools -
+  Logoran middleware cascade in a more traditional way as you may be used to with similar tools -
   this was previously difficult to make user friendly with node's use of callbacks.
   However with async functions we can achieve "true" middleware. Contrasting Connect's implementation which
-  simply passes control through series of functions until one returns, Koa invoke "downstream", then
+  simply passes control through series of functions until one returns, Logoran invoke "downstream", then
   control flows back "upstream".
 
   The following example responds with "Hello World", however first the request flows through
@@ -75,8 +75,8 @@ app.listen(3000);
   its upstream behaviour.
 
 ```js
-const Koa = require('koa');
-const app = new Koa();
+const Logoran = require('logoran');
+const app = new Logoran();
 
 // x-response-time
 
@@ -116,16 +116,16 @@ app.listen(3000);
 
 ## app.listen(...)
 
-  A Koa application is not a 1-to-1 representation of an HTTP server.
-  One or more Koa applications may be mounted together to form larger
+  A Logoran application is not a 1-to-1 representation of an HTTP server.
+  One or more Logoran applications may be mounted together to form larger
   applications with a single HTTP server.
 
   Create and return an HTTP server, passing the given arguments to
-  `Server#listen()`. These arguments are documented on [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback). The following is a useless Koa application bound to port `3000`:
+  `Server#listen()`. These arguments are documented on [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback). The following is a useless Logoran application bound to port `3000`:
 
 ```js
-const Koa = require('koa');
-const app = new Koa();
+const Logoran = require('logoran');
+const app = new Logoran();
 app.listen(3000);
 ```
 
@@ -133,8 +133,8 @@ app.listen(3000);
 
 ```js
 const http = require('http');
-const Koa = require('koa');
-const app = new Koa();
+const Logoran = require('logoran');
+const app = new Logoran();
 http.createServer(app.callback()).listen(3000);
 ```
 
@@ -144,8 +144,8 @@ http.createServer(app.callback()).listen(3000);
 ```js
 const http = require('http');
 const https = require('https');
-const Koa = require('koa');
-const app = new Koa();
+const Logoran = require('logoran');
+const app = new Logoran();
 http.createServer(app.callback()).listen(3000);
 https.createServer(app.callback()).listen(3001);
 ```
@@ -154,12 +154,12 @@ https.createServer(app.callback()).listen(3001);
 
   Return a callback function suitable for the `http.createServer()`
   method to handle a request.
-  You may also use this callback function to mount your Koa app in a
+  You may also use this callback function to mount your Logoran app in a
   Connect/Express app.
 
 ## app.use(function)
 
-  Add the given middleware function to this application. See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
+  Add the given middleware function to this application. See [Middleware](https://github.com/logoran/logoran/wiki#middleware) for
   more information.
 
 ## app.keys=
@@ -225,6 +225,6 @@ app.on('error', (err, ctx) => {
 });
 ```
 
-  When an error occurs _and_ it is still possible to respond to the client, aka no data has been written to the socket, Koa will respond
+  When an error occurs _and_ it is still possible to respond to the client, aka no data has been written to the socket, Logoran will respond
   appropriately with a 500 "Internal Server Error". In either case
   an app-level "error" is emitted for logging purposes.

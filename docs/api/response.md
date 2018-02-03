@@ -1,6 +1,6 @@
 # Response
 
-  A Koa `Response` object is an abstraction on top of node's vanilla response object,
+  A Logoran `Response` object is an abstraction on top of node's vanilla response object,
   providing additional functionality that is useful for every day HTTP server
   development.
 
@@ -122,7 +122,7 @@ so you can make a correction.
   - `Object` || `Array` json-stringified
   - `null` no content response
 
-If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
+If `response.status` has not been set, Logoran will automatically set the status to `200` or `204`.
 
 #### String
 

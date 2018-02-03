@@ -1,17 +1,17 @@
-# Troubleshooting Koa
+# Troubleshooting Logoran
 
 - [Whenever I try to access my route, it sends back a 404](#whenever-i-try-to-access-my-route-it-sends-back-a-404)
 - [My response or context changes have no effect](#my-response-or-context-changes-have-no-effect)
 - [My middleware is not called](#my-middleware-is-not-called)
 
-See also [debugging Koa](guide.md#debugging-koa).
+See also [debugging Logoran](guide.md#debugging-logoran).
 
 If you encounter a problem and later learn how to fix it, and think others might also encounter that problem, please 
 consider contributing to this documentation.
 
 ## Whenever I try to access my route, it sends back a 404
 
-This is a common but troublesome problem when working with Koa middleware. First, it is critical to understand when Koa generates a 404. Koa does not care which or how much middleware was run, in many cases a 200 and 404 trigger the same number of middleware. Instead, the default status for any response is 404. The most obvious way this is changed is through `ctx.status`. However, if `ctx.body` is set when the status has not been explicitly defined (through `ctx.status`), the status is set to 200. This explains why simply setting the body results in a 200. Once the middleware is done (when the middleware and any returned promises are complete), Koa sends out the response. After that, nothing can alter the response. If it was a 404 at the time, it will be a 404 at the end, even if `ctx.status` or `ctx.body` are set afterwords.
+This is a common but troublesome problem when working with Logoran middleware. First, it is critical to understand when Logoran generates a 404. Logoran does not care which or how much middleware was run, in many cases a 200 and 404 trigger the same number of middleware. Instead, the default status for any response is 404. The most obvious way this is changed is through `ctx.status`. However, if `ctx.body` is set when the status has not been explicitly defined (through `ctx.status`), the status is set to 200. This explains why simply setting the body results in a 200. Once the middleware is done (when the middleware and any returned promises are complete), Logoran sends out the response. After that, nothing can alter the response. If it was a 404 at the time, it will be a 404 at the end, even if `ctx.status` or `ctx.body` are set afterwords.
 
 Even though we now understand the basis of a 404, it might not be as clear why a 404 is generated in a specific case. This can be especially troublesome when it seems that `ctx.status` or `ctx.body` are set. 
 
@@ -50,7 +50,7 @@ router.get('/fetch', async (ctx, next) => {
 
 ### Cause
 
-`ctx.body` is not set until *after* the response has been sent. The code doesn't tell Koa to wait for the database to return the record. Koa sends the response after the middleware has been run, but not after the callback inside the middleware has been run. In the gap there, `ctx.body` has not yet been set, so Koa responds with a 404.
+`ctx.body` is not set until *after* the response has been sent. The code doesn't tell Logoran to wait for the database to return the record. Logoran sends the response after the middleware has been run, but not after the callback inside the middleware has been run. In the gap there, `ctx.body` has not yet been set, so Logoran responds with a 404.
 
 ### Identifying this as the issue
 
@@ -90,7 +90,7 @@ router.get('/fetch', function (ctx, next) {
 });
 ```
 
-Returning the promise given by the database interface tells Koa to wait for the promise to finish before responding. At that time, the body will have been set. This results in Koa sending back a 200 with a proper response.
+Returning the promise given by the database interface tells Logoran to wait for the promise to finish before responding. At that time, the body will have been set. This results in Logoran sending back a 200 with a proper response.
 
 The fix in the `async` version is to add an `await` statement:
 

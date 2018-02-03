@@ -1,6 +1,6 @@
 # Request
 
-  A Koa `Request` object is an abstraction on top of node's vanilla request object,
+  A Logoran `Request` object is an abstraction on top of node's vanilla request object,
   providing additional functionality that is useful for every day HTTP server
   development.
 
@@ -99,7 +99,7 @@ ctx.request.href;
   Get hostname when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
   
-  If host is IPv6, Koa delegates parsing to
+  If host is IPv6, Logoran delegates parsing to
   [WHATWG URL API](https://nodejs.org/dist/latest-v8.x/docs/api/url.html#url_the_whatwg_url_api),
   *Note* This may impact performance.
 
@@ -242,7 +242,7 @@ if (ctx.is('image/*')) {
 
 ### Content Negotiation
 
-  Koa's `request` object includes helpful content negotiation utilities powered by [accepts](http://github.com/expressjs/accepts) and [negotiator](https://github.com/federomero/negotiator). These utilities are:
+  Logoran's `request` object includes helpful content negotiation utilities powered by [accepts](http://github.com/expressjs/accepts) and [negotiator](https://github.com/federomero/negotiator). These utilities are:
 
 - `request.accepts(types)`
 - `request.acceptsEncodings(types)`

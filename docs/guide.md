@@ -1,14 +1,14 @@
 
 # Guide
 
-  This guide covers Koa topics that are not directly API related, such as best practices for writing middleware and application structure suggestions. In these examples we use async functions as middleware - you can also use commonFunction or generatorFunction which will be a little different.
+  This guide covers Logoran topics that are not directly API related, such as best practices for writing middleware and application structure suggestions. In these examples we use async functions as middleware - you can also use commonFunction or generatorFunction which will be a little different.
 
 ## Writing Middleware
 
-  Koa middleware are simple functions which return a `MiddlewareFunction` with signature (ctx, next). When
+  Logoran middleware are simple functions which return a `MiddlewareFunction` with signature (ctx, next). When
   the middleware is run, it must manually invoke `next()` to run the "downstream" middleware.
 
-  For example if you wanted to track how long it takes for a request to propagate through Koa by adding an
+  For example if you wanted to track how long it takes for a request to propagate through Logoran by adding an
   `X-Response-Time` header field the middleware would look like the following:
 
 ```js
@@ -26,7 +26,7 @@ app.use(responseTime);
   while any code after is the "bubble" phase. This crude gif illustrates how async function allow us
   to properly utilize stack flow to implement request and response flows:
 
-![Koa middleware](/docs/middleware.gif)
+![Logoran middleware](/docs/middleware.gif)
 
    1. Create a date to track response time
    2. Await control to the next middleware
@@ -37,9 +37,9 @@ app.use(responseTime);
    7. Output log line
    8. Calculate response time
    9. Set `X-Response-Time` header field
-   10. Hand off to Koa to handle the response
+   10. Hand off to Logoran to handle the response
 
- Next we'll look at the best practices for creating Koa middleware.
+ Next we'll look at the best practices for creating Logoran middleware.
 
 ## Middleware Best Practices
 
@@ -87,12 +87,12 @@ function logger(format) {
 }
 ```
 
-### Combining multiple middleware with koa-compose
+### Combining multiple middleware with logoran-compose
 
-  Sometimes you want to "compose" multiple middleware into a single middleware for easy re-use or exporting. You can use [koa-compose](https://github.com/koajs/compose)
+  Sometimes you want to "compose" multiple middleware into a single middleware for easy re-use or exporting. You can use [logoran-compose](https://github.com/logoran/compose)
 
 ```js
-const compose = require('koa-compose');
+const compose = require('logoran-compose');
 
 async function random(ctx, next) {
   if ('/random' == ctx.path) {
@@ -181,7 +181,7 @@ app.use(async function (ctx, next) {
 
 ## Async operations
 
-  Async function and promise forms Koa's foundation, allowing
+  Async function and promise forms Logoran's foundation, allowing
   you to write non-blocking sequential code. For example this middleware reads the filenames from `./docs`,
   and then reads the contents of each markdown file in parallel before assigning the body to the joint result.
 
@@ -198,21 +198,21 @@ app.use(async function (ctx, next) {
 });
 ```
 
-## Debugging Koa
+## Debugging Logoran
 
-  Koa along with many of the libraries it's built with support the __DEBUG__ environment variable from [debug](https://github.com/visionmedia/debug) which provides simple conditional logging.
+  Logoran along with many of the libraries it's built with support the __DEBUG__ environment variable from [debug](https://github.com/visionmedia/debug) which provides simple conditional logging.
 
   For example
-  to see all Koa-specific debugging information just pass `DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
+  to see all Logoran-specific debugging information just pass `DEBUG=logoran*` and upon boot you'll see the list of middleware used, among other things.
 
 ```
-$ DEBUG=koa* node --harmony examples/simple
-  koa:application use responseTime +0ms
-  koa:application use logger +4ms
-  koa:application use contentLength +0ms
-  koa:application use notfound +0ms
-  koa:application use response +0ms
-  koa:application listen +0ms
+$ DEBUG=logoran* node --harmony examples/simple
+  logoran:application use responseTime +0ms
+  logoran:application use logger +4ms
+  logoran:application use contentLength +0ms
+  logoran:application use notfound +0ms
+  logoran:application use response +0ms
+  logoran:application listen +0ms
 ```
 
   Since JavaScript does not allow defining function names at
@@ -233,5 +233,5 @@ app.use(publicFiles);
   Now, instead of just seeing "serve" when debugging, you will see:
 
 ```
-  koa:application use static /public +0ms
+  logoran:application use static /public +0ms
 ```

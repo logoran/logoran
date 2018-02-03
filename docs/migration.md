@@ -102,15 +102,15 @@ In v1.x, the Application constructor function could be called directly, without 
 instantiate an instance of an application.  For example:
 
 ```js
-var koa = require('koa');
-var app = module.exports = koa();
+var logoran = require('logoran');
+var app = module.exports = logoran();
 ```
 
 v2.x uses es6 classes which require the `new` keyword to be used.
 
 ```js
-var koa = require('koa');
-var app = module.exports = new koa();
+var logoran = require('logoran');
+var app = module.exports = new logoran();
 ```
 
 ## ENV specific logging behavior removed

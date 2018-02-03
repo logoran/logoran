@@ -1,6 +1,6 @@
 # Context
 
-  A Koa Context encapsulates node's `request` and `response` objects
+  A Logoran Context encapsulates node's `request` and `response` objects
   into a single object which provides many helpful methods for writing
   web applications and APIs.
   These operations are used so frequently in HTTP server development
@@ -14,8 +14,8 @@
 ```js
 app.use(async ctx => {
   ctx; // is the Context
-  ctx.request; // is a Koa Request
-  ctx.response; // is a Koa Response
+  ctx.request; // is a Logoran Request
+  ctx.response; // is a Logoran Response
 });
 ```
 
@@ -35,7 +35,7 @@ app.use(async ctx => {
 
   Node's `response` object.
 
-  Bypassing Koa's response handling is __not supported__. Avoid using the following node properties:
+  Bypassing Logoran's response handling is __not supported__. Avoid using the following node properties:
 
 - `res.statusCode`
 - `res.writeHead()`
@@ -44,11 +44,11 @@ app.use(async ctx => {
 
 ### ctx.request
 
-  A Koa `Request` object.
+  A Logoran `Request` object.
 
 ### ctx.response
 
-  A Koa `Response` object.
+  A Logoran `Response` object.
 
 ### ctx.state
 
@@ -68,7 +68,7 @@ ctx.state.user = await User.find(id);
 
  - `signed` the cookie requested should be signed
 
-Koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+Logoran uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
 ### ctx.cookies.set(name, value, [options])
 
@@ -83,12 +83,12 @@ Koa uses the [cookies](https://github.com/jed/cookies) module where options are 
  - `httpOnly` server-accessible cookie, __true__ by default
  - `overwrite` a boolean indicating whether to overwrite previously set cookies of the same name (__false__ by default). If this is true, all cookies set during the same request with the same name (regardless of path or domain) are filtered out of the Set-Cookie header when setting this cookie.
 
-Koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+Logoran uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
 ### ctx.throw([status], [msg], [properties])
 
   Helper method to throw an error with a `.status` property
-  defaulting to `500` that will allow Koa to respond appropriately.
+  defaulting to `500` that will allow Logoran to respond appropriately.
   The following combinations are allowed:
 
 ```js
@@ -118,7 +118,7 @@ throw err;
 ctx.throw(401, 'access_denied', { user: user });
 ```
 
-Koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
+Logoran uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
 
 ### ctx.assert(value, [status], [msg], [properties])
 
@@ -130,13 +130,13 @@ Koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
 ctx.assert(ctx.state.user, 401, 'User not found. Please login!');
 ```
 
-Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
+Logoran uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
 
 ### ctx.respond
 
-  To bypass Koa's built-in response handling, you may explicitly set `ctx.respond = false;`. Use this if you want to write to the raw `res` object instead of letting Koa handle the response for you.
+  To bypass Logoran's built-in response handling, you may explicitly set `ctx.respond = false;`. Use this if you want to write to the raw `res` object instead of letting Logoran handle the response for you.
 
-  Note that using this is __not__ supported by Koa. This may break intended functionality of Koa middleware and Koa itself. Using this property is considered a hack and is only a convenience to those wishing to use traditional `fn(req, res)` functions and middleware within Koa.
+  Note that using this is __not__ supported by Logoran. This may break intended functionality of Logoran middleware and Logoran itself. Using this property is considered a hack and is only a convenience to those wishing to use traditional `fn(req, res)` functions and middleware within Logoran.
 
 ## Request aliases
 
