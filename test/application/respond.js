@@ -4,7 +4,7 @@
 const request = require('supertest');
 const statuses = require('statuses');
 const assert = require('assert');
-const Koa = require('../..');
+const Logoran = require('../..');
 const fs = require('fs');
 
 describe('app.respond', () => {
@@ -18,7 +18,7 @@ describe('app.respond', () => {
 
   describe('when ctx.respond === false', () => {
     it('should function (ctx)', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = 'Hello';
@@ -43,7 +43,7 @@ describe('app.respond', () => {
 
   describe('when this.type === null', () => {
     it('should not send Content-Type header', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = '';
@@ -62,7 +62,7 @@ describe('app.respond', () => {
 
   describe('when HEAD is used', () => {
     it('should not respond with the body', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = 'Hello';
@@ -80,7 +80,7 @@ describe('app.respond', () => {
     });
 
     it('should keep json headers', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = { hello: 'world' };
@@ -98,7 +98,7 @@ describe('app.respond', () => {
     });
 
     it('should keep string headers', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = 'hello world';
@@ -116,7 +116,7 @@ describe('app.respond', () => {
     });
 
     it('should keep buffer headers', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = Buffer.from('hello world');
@@ -134,7 +134,7 @@ describe('app.respond', () => {
     });
 
     it('should respond with a 404 if no body was set', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
 
@@ -148,7 +148,7 @@ describe('app.respond', () => {
     });
 
     it('should respond with a 200 if body = ""', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = '';
@@ -162,7 +162,7 @@ describe('app.respond', () => {
     });
 
     it('should not overwrite the content-type', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.status = 200;
@@ -180,7 +180,7 @@ describe('app.respond', () => {
 
   describe('when no middleware are present', () => {
     it('should 404', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       const server = app.listen();
 
@@ -192,7 +192,7 @@ describe('app.respond', () => {
 
   describe('when res has already been written to', () => {
     it('should not cause an app error', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use((ctx, next) => {
         const res = ctx.res;
@@ -212,7 +212,7 @@ describe('app.respond', () => {
     });
 
     it('should send the right body', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use((ctx, next) => {
         const res = ctx.res;
@@ -239,7 +239,7 @@ describe('app.respond', () => {
   describe('when .body is missing', () => {
     describe('with status=400', () => {
       it('should respond with the associated status message', () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           ctx.status = 400;
@@ -257,7 +257,7 @@ describe('app.respond', () => {
 
     describe('with status=204', () => {
       it('should respond without a body', async () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           ctx.status = 204;
@@ -276,7 +276,7 @@ describe('app.respond', () => {
 
     describe('with status=205', () => {
       it('should respond without a body', async () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           ctx.status = 205;
@@ -295,7 +295,7 @@ describe('app.respond', () => {
 
     describe('with status=304', () => {
       it('should respond without a body', async () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           ctx.status = 304;
@@ -314,7 +314,7 @@ describe('app.respond', () => {
 
     describe('with custom status=700', () => {
       it('should respond with the associated status message', async () => {
-        const app = new Koa();
+        const app = new Logoran();
         statuses['700'] = 'custom status';
 
         app.use(ctx => {
@@ -334,7 +334,7 @@ describe('app.respond', () => {
 
     describe('with custom statusMessage=ok', () => {
       it('should respond with the custom status message', async () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           ctx.status = 200;
@@ -354,7 +354,7 @@ describe('app.respond', () => {
 
     describe('with custom status without message', () => {
       it('should respond with the status code number', () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           ctx.res.statusCode = 701;
@@ -372,7 +372,7 @@ describe('app.respond', () => {
 
   describe('when .body is a null', () => {
     it('should respond 204 by default', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = null;
@@ -389,7 +389,7 @@ describe('app.respond', () => {
     });
 
     it('should respond 204 with status=200', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.status = 200;
@@ -407,7 +407,7 @@ describe('app.respond', () => {
     });
 
     it('should respond 205 with status=205', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.status = 205;
@@ -425,7 +425,7 @@ describe('app.respond', () => {
     });
 
     it('should respond 304 with status=304', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.status = 304;
@@ -445,7 +445,7 @@ describe('app.respond', () => {
 
   describe('when .body is a string', () => {
     it('should respond', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = 'Hello';
@@ -461,7 +461,7 @@ describe('app.respond', () => {
 
   describe('when .body is a Buffer', () => {
     it('should respond', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = Buffer.from('Hello');
@@ -478,7 +478,7 @@ describe('app.respond', () => {
 
   describe('when .body is a Stream', () => {
     it('should respond', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = fs.createReadStream('package.json');
@@ -497,7 +497,7 @@ describe('app.respond', () => {
     });
 
     it('should strip content-length when overwriting', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = 'hello';
@@ -517,7 +517,7 @@ describe('app.respond', () => {
     });
 
     it('should keep content-length if not overwritten', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.length = fs.readFileSync('package.json').length;
@@ -538,7 +538,7 @@ describe('app.respond', () => {
 
     it('should keep content-length if overwritten with the same stream',
       async () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           ctx.length = fs.readFileSync('package.json').length;
@@ -560,7 +560,7 @@ describe('app.respond', () => {
       });
 
     it('should handle errors', done => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.set('Content-Type', 'application/json; charset=utf-8');
@@ -577,7 +577,7 @@ describe('app.respond', () => {
     });
 
     it('should handle errors when no content status', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.status = 204;
@@ -592,7 +592,7 @@ describe('app.respond', () => {
     });
 
     it('should handle all intermediate stream body errors', done => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = fs.createReadStream('does not exist');
@@ -611,7 +611,7 @@ describe('app.respond', () => {
 
   describe('when .body is an Object', () => {
     it('should respond with json', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = { hello: 'world' };
@@ -628,7 +628,7 @@ describe('app.respond', () => {
 
   describe('when an error occurs', () => {
     it('should emit "error" on the app', done => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         throw new Error('boom');
@@ -646,7 +646,7 @@ describe('app.respond', () => {
 
     describe('with an .expose property', () => {
       it('should expose the message', () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           const err = new Error('sorry!');
@@ -663,7 +663,7 @@ describe('app.respond', () => {
 
     describe('with a .status property', () => {
       it('should respond with .status', () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use(ctx => {
           const err = new Error('s3 explodes');
@@ -678,7 +678,7 @@ describe('app.respond', () => {
     });
 
     it('should respond with 500', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         throw new Error('boom!');
@@ -692,7 +692,7 @@ describe('app.respond', () => {
     });
 
     it('should be catchable', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use((ctx, next) => {
         return next().then(() => {
@@ -716,7 +716,7 @@ describe('app.respond', () => {
 
   describe('when status and body property', () => {
     it('should 200', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.status = 304;
@@ -733,7 +733,7 @@ describe('app.respond', () => {
     });
 
     it('should 204', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.status = 200;

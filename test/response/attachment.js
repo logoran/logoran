@@ -4,7 +4,7 @@
 const assert = require('assert');
 const context = require('../helpers/context');
 const request = require('supertest');
-const Koa = require('../..');
+const Logoran = require('../..');
 
 describe('ctx.attachment([filename])', () => {
   describe('when given a filename', () => {
@@ -33,7 +33,7 @@ describe('ctx.attachment([filename])', () => {
     });
 
     it('should work with http client', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use((ctx, next) => {
         ctx.attachment('path/to/include-no-ascii-char-中文名-ok.json');

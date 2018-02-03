@@ -3,13 +3,13 @@
 
 const assert = require('assert');
 const Stream = require('stream');
-const Koa = require('../..');
+const Logoran = require('../..');
 const Request = require('../helpers/context').request;
 
 describe('req.ip', () => {
   describe('with req.ips present', () => {
     it('should return req.ips[0]', () => {
-      const app = new Koa();
+      const app = new Logoran();
       const req = { headers: {}, socket: new Stream.Duplex() };
       app.proxy = true;
       req.headers['x-forwarded-for'] = '127.0.0.1';

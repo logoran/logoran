@@ -5,7 +5,7 @@ const response = require('../helpers/context').response;
 const request = require('supertest');
 const statuses = require('statuses');
 const assert = require('assert');
-const Koa = require('../..');
+const Logoran = require('../..');
 
 describe('res.status=', () => {
   describe('when a status code', () => {
@@ -65,7 +65,7 @@ describe('res.status=', () => {
 
   function strip(status){
     it('should strip content related header fields', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.body = { foo: 'bar' };
@@ -89,7 +89,7 @@ describe('res.status=', () => {
     });
 
     it('should strip content releated header fields after status set', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use(ctx => {
         ctx.status = status;

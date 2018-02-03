@@ -3,11 +3,11 @@
 
 const request = require('supertest');
 const assert = require('assert');
-const Koa = require('../..');
+const Logoran = require('../..');
 
 describe('app', () => {
   it('should handle socket errors', done => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       // triggers ctx.socket.writable == false
@@ -25,7 +25,7 @@ describe('app', () => {
   });
 
   it('should not .writeHead when !socket.writable', done => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       // set .writable to false
@@ -49,7 +49,7 @@ describe('app', () => {
   it('should set development env when NODE_ENV missing', () => {
     const NODE_ENV = process.env.NODE_ENV;
     process.env.NODE_ENV = '';
-    const app = new Koa();
+    const app = new Logoran();
     process.env.NODE_ENV = NODE_ENV;
     assert.equal(app.env, 'development');
   });

@@ -3,7 +3,7 @@
 
 const assert = require('assert');
 const request = require('supertest');
-const Koa = require('../..');
+const Logoran = require('../..');
 const context = require('../helpers/context');
 
 describe('ctx.onerror(err)', () => {
@@ -16,7 +16,7 @@ describe('ctx.onerror(err)', () => {
   });
 
   it('should respond', () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       ctx.body = 'something else';
@@ -34,7 +34,7 @@ describe('ctx.onerror(err)', () => {
   });
 
   it('should unset all headers', async () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       ctx.set('Vary', 'Accept-Encoding');
@@ -57,7 +57,7 @@ describe('ctx.onerror(err)', () => {
   });
 
   it('should set headers specified in the error', async () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       ctx.set('Vary', 'Accept-Encoding');
@@ -86,7 +86,7 @@ describe('ctx.onerror(err)', () => {
   });
 
   it('should ignore error after headerSent', done => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.on('error', err => {
       assert.equal(err.message, 'mock error');
@@ -111,7 +111,7 @@ describe('ctx.onerror(err)', () => {
   describe('when invalid err.status', () => {
     describe('not number', () => {
       it('should respond 500', () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use((ctx, next) => {
           ctx.body = 'something else';
@@ -132,7 +132,7 @@ describe('ctx.onerror(err)', () => {
 
     describe('not http status code', () => {
       it('should respond 500', () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use((ctx, next) => {
           ctx.body = 'something else';
@@ -154,7 +154,7 @@ describe('ctx.onerror(err)', () => {
 
   describe('when non-error thrown', () => {
     it('should response non-error thrown message', () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.use((ctx, next) => {
         throw 'string error'; // eslint-disable-line no-throw-literal
@@ -187,7 +187,7 @@ describe('ctx.onerror(err)', () => {
     });
 
     it('should stringify error if it is an object', done => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.on('error', err => {
         assert.equal(err, 'Error: non-error thrown: {"key":"value"}');

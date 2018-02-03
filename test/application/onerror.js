@@ -2,7 +2,7 @@
 'use strict';
 
 const assert = require('assert');
-const Koa = require('../..');
+const Logoran = require('../..');
 const AssertionError = require('assert').AssertionError;
 
 describe('app.onerror(err)', () => {
@@ -15,7 +15,7 @@ describe('app.onerror(err)', () => {
   });
 
   it('should throw an error if a non-error is given', () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     assert.throws(() => {
       app.onerror('foo');
@@ -23,7 +23,7 @@ describe('app.onerror(err)', () => {
   });
 
   it('should do nothing if status is 404', () => {
-    const app = new Koa();
+    const app = new Logoran();
     const err = new Error();
 
     err.status = 404;
@@ -34,7 +34,7 @@ describe('app.onerror(err)', () => {
   });
 
   it('should do nothing if .silent', () => {
-    const app = new Koa();
+    const app = new Logoran();
     app.silent = true;
     const err = new Error();
 
@@ -44,7 +44,7 @@ describe('app.onerror(err)', () => {
   });
 
   it('should log the error to stderr', () => {
-    const app = new Koa();
+    const app = new Logoran();
     app.env = 'dev';
 
     const err = new Error();
@@ -57,7 +57,7 @@ describe('app.onerror(err)', () => {
   });
 
   it('should use err.toString() instad of err.stack', () => {
-    const app = new Koa();
+    const app = new Logoran();
     app.env = 'dev';
 
     const err = new Error('mock stack null');

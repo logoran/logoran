@@ -3,12 +3,12 @@
 
 const request = require('supertest');
 const assert = require('assert');
-const Koa = require('../..');
+const Logoran = require('../..');
 const http = require('http');
 
 describe('ctx.flushHeaders()', () => {
   it('should set headersSent', () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       ctx.body = 'Body';
@@ -26,7 +26,7 @@ describe('ctx.flushHeaders()', () => {
   });
 
   it('should allow a response afterwards', () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       ctx.status = 200;
@@ -44,7 +44,7 @@ describe('ctx.flushHeaders()', () => {
   });
 
   it('should send the correct status code', () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       ctx.status = 401;
@@ -62,7 +62,7 @@ describe('ctx.flushHeaders()', () => {
   });
 
   it('should fail to set the headers after flushHeaders', async () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       ctx.status = 401;
@@ -98,7 +98,7 @@ describe('ctx.flushHeaders()', () => {
 
   it('should flush headers first and delay to send data', done => {
     const PassThrough = require('stream').PassThrough;
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use(ctx => {
       ctx.type = 'json';

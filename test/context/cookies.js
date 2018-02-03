@@ -3,11 +3,11 @@
 
 const assert = require('assert');
 const request = require('supertest');
-const Koa = require('../..');
+const Logoran = require('../..');
 
 describe('ctx.cookies.set()', () => {
   it('should set an unsigned cookie', async () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => {
       ctx.cookies.set('name', 'jon');
@@ -27,7 +27,7 @@ describe('ctx.cookies.set()', () => {
   describe('with .signed', () => {
     describe('when no .keys are set', () => {
       it('should error', () => {
-        const app = new Koa();
+        const app = new Logoran();
 
         app.use((ctx, next) => {
           try {
@@ -44,7 +44,7 @@ describe('ctx.cookies.set()', () => {
     });
 
     it('should send a signed cookie', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.keys = ['a', 'b'];
 
@@ -68,7 +68,7 @@ describe('ctx.cookies.set()', () => {
 
   describe('with secure', () => {
     it('should get secure from request', async () => {
-      const app = new Koa();
+      const app = new Logoran();
 
       app.proxy = true;
       app.keys = ['a', 'b'];

@@ -2,11 +2,11 @@
 'use strict';
 
 const assert = require('assert');
-const Koa = require('../..');
+const Logoran = require('../..');
 
 describe('app.toJSON()', () => {
   it('should work', () => {
-    const app = new Koa();
+    const app = new Logoran();
     const obj = app.toJSON();
 
     assert.deepEqual({

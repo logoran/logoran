@@ -4,7 +4,7 @@
 const assert = require('assert');
 const request = require('supertest');
 const response = require('../helpers/context').response;
-const Koa = require('../..');
+const Logoran = require('../..');
 
 describe('res.header', () => {
   it('should return the response header object', () => {
@@ -21,7 +21,7 @@ describe('res.header', () => {
   });
 
   it('should return the response header object when no mocks are in use', async () => {
-    const app = new Koa();
+    const app = new Logoran();
     let header;
 
     app.use(ctx => {

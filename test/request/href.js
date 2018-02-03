@@ -4,7 +4,7 @@
 const assert = require('assert');
 const Stream = require('stream');
 const http = require('http');
-const Koa = require('../../');
+const Logoran = require('../../');
 const context = require('../helpers/context');
 
 describe('ctx.href', () => {
@@ -26,7 +26,7 @@ describe('ctx.href', () => {
   });
 
   it('should work with `GET http://example.com/foo`', done => {
-    const app = new Koa();
+    const app = new Logoran();
     app.use(ctx => {
       ctx.body = ctx.href;
     });

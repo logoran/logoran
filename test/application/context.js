@@ -3,12 +3,12 @@
 
 const request = require('supertest');
 const assert = require('assert');
-const Koa = require('../..');
+const Logoran = require('../..');
 
 describe('app.context', () => {
-  const app1 = new Koa();
+  const app1 = new Logoran();
   app1.context.msg = 'hello';
-  const app2 = new Koa();
+  const app2 = new Logoran();
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {

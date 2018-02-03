@@ -2,7 +2,7 @@
 'use strict';
 
 const assert = require('assert');
-const Koa = require('../../');
+const Logoran = require('../../');
 const net = require('net');
 
 describe('res.writable', () => {
@@ -22,7 +22,7 @@ describe('res.writable', () => {
     }
 
     it('should always writable and response all requests', done => {
-      const app = new Koa();
+      const app = new Logoran();
       let count = 0;
       app.use(ctx => {
         count++;
@@ -51,7 +51,7 @@ describe('res.writable', () => {
     }
 
     it('should not writable', done => {
-      const app = new Koa();
+      const app = new Logoran();
       app.use(ctx => {
         sleep(1000)
         .then(() => {
@@ -78,7 +78,7 @@ describe('res.writable', () => {
     }
 
     it('should not writable', done => {
-      const app = new Koa();
+      const app = new Logoran();
       app.use(ctx => {
         ctx.res.end();
         if (ctx.writable) return done(new Error('ctx.writable should not be true'));

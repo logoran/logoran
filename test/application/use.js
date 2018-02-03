@@ -3,11 +3,11 @@
 
 const request = require('supertest');
 const assert = require('assert');
-const Koa = require('../..');
+const Logoran = require('../..');
 
 describe('app.use(fn)', () => {
   it('should compose middleware', async () => {
-    const app = new Koa();
+    const app = new Logoran();
     const calls = [];
 
     app.use((ctx, next) => {
@@ -42,7 +42,7 @@ describe('app.use(fn)', () => {
 
   it('should compose mixed middleware', async () => {
     process.once('deprecation', () => {}); // silence deprecation message
-    const app = new Koa();
+    const app = new Logoran();
     const calls = [];
 
     app.use((ctx, next) => {
@@ -76,7 +76,7 @@ describe('app.use(fn)', () => {
 
   // https://github.com/koajs/koa/pull/530#issuecomment-148138051
   it('should catch thrown errors in non-async functions', () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use(ctx => ctx.throw('Not Found', 404));
 
@@ -87,7 +87,7 @@ describe('app.use(fn)', () => {
 
   it('should accept both generator and function middleware', () => {
     process.once('deprecation', () => {}); // silence deprecation message
-    const app = new Koa();
+    const app = new Logoran();
 
     app.use((ctx, next) => next());
     app.use(function * (next){ this.body = 'generator'; });
@@ -99,7 +99,7 @@ describe('app.use(fn)', () => {
   });
 
   it('should throw error for non function', () => {
-    const app = new Koa();
+    const app = new Logoran();
 
     [null, undefined, 0, false, 'not a function'].forEach(v => {
       assert.throws(() => app.use(v), /middleware must be a function!/);
@@ -112,7 +112,7 @@ describe('app.use(fn)', () => {
       done();
     });
 
-    const app = new Koa();
+    const app = new Logoran();
     app.use(function * (){});
   });
 });
