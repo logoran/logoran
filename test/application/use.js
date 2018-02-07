@@ -40,6 +40,61 @@ describe('app.use(fn)', () => {
     assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
   });
 
+  it('should allow middleware be call multi times', async () => {
+    const app = new Logoran();
+    const calls = [];
+
+    app.use((ctx, next) => {
+      calls.push(1);
+      next().then(() => {
+        return next().then(() => {
+          calls.push(4);
+        });
+      });
+    });
+
+    app.use((ctx, next) => {
+      calls.push(2);
+      return next().then(() => {
+        calls.push(3);
+      });
+    });
+
+    const server = app.listen();
+
+    await request(server)
+      .get('/')
+      .expect(404);
+
+    assert.deepEqual(calls, [1, 2, 3, 2, 3, 4]);
+  });
+
+  it('should accept array of middleware', async () => {
+    const app = new Logoran();
+    const calls = [];
+
+    app.use([(ctx, next) => {
+      calls.push(1);
+      return next().then(() => {
+        calls.push(4);
+      });
+    },
+    (ctx, next) => {
+      calls.push(2);
+      return next().then(() => {
+        calls.push(3);
+      });
+    }]);
+
+    const server = app.listen();
+
+    await request(server)
+      .get('/')
+      .expect(404);
+
+    assert.deepEqual(calls, [1, 2, 3, 4]);
+  });
+
   it('should compose mixed middleware', async () => {
     process.once('deprecation', () => {}); // silence deprecation message
     const app = new Logoran();

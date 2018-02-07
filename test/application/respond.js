@@ -443,6 +443,33 @@ describe('app.respond', () => {
     });
   });
 
+  describe('when .body is undefined', () => {
+    it('should 404', async () => {
+      const app = new Logoran();
+
+      const server = app.listen();
+
+      const res = await request(server)
+        .get('/')
+        .expect(404);
+    });
+
+    it('should use slot', async () => {
+      const app = new Logoran();
+
+      app.use(async ctx => {
+        ctx.slot = 'use slot';
+      });
+
+      const server = app.listen();
+
+      const res = await request(server)
+        .get('/')
+        .expect(200)
+        .expect('use slot');
+    });
+  });
+
   describe('when .body is a string', () => {
     it('should respond', () => {
       const app = new Logoran();
