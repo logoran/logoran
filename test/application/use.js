@@ -73,18 +73,20 @@ describe('app.use(fn)', () => {
     const app = new Logoran();
     const calls = [];
 
-    app.use([(ctx, next) => {
-      calls.push(1);
-      return next().then(() => {
-        calls.push(4);
-      });
-    },
-    (ctx, next) => {
-      calls.push(2);
-      return next().then(() => {
-        calls.push(3);
-      });
-    }]);
+    app.use([
+      (ctx, next) => {
+        calls.push(1);
+        return next().then(() => {
+          calls.push(4);
+        });
+      },
+      (ctx, next) => {
+        calls.push(2);
+        return next().then(() => {
+          calls.push(3);
+        });
+      }
+    ]);
 
     const server = app.listen();
 

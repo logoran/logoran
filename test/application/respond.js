@@ -449,7 +449,7 @@ describe('app.respond', () => {
 
       const server = app.listen();
 
-      const res = await request(server)
+      return await request(server)
         .get('/')
         .expect(404);
     });
@@ -463,7 +463,7 @@ describe('app.respond', () => {
 
       const server = app.listen();
 
-      const res = await request(server)
+      return await request(server)
         .get('/')
         .expect(200)
         .expect('use slot');
